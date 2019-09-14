@@ -1,0 +1,43 @@
+package com.sunilsamuel.customer.rules;
+
+import com.sunilsamuel.simple.brms.model.Employee;
+
+rule "Process Customer"
+ruleflow-group "Customer-Employee"
+when
+	$employee : Employee (customer)
+then
+	modify ($employee) {
+		setBonus (100.40d)
+	}
+end
+
+rule "Process Customer Employee as Entry"
+ruleflow-group "Customer-Entry"
+when
+	$employee : Employee (customer, status == "Entry")
+then
+	modify ($employee) {
+		setCustomerAdditive(20.45d)
+	}
+end
+
+rule "Process Customer Employee as Junior"
+ruleflow-group "Customer-Junior"
+when
+	$employee : Employee (customer, status == "Junior")
+then
+	modify ($employee) {
+		setCustomerAdditive(40.45d)
+	}
+end
+
+rule "Process Customer Employee as Senior"
+ruleflow-group "Customer-Senior"
+when
+	$employee : Employee (customer, status == "Senior")
+then
+	modify ($employee) {
+		setCustomerAdditive(60.45d)
+	}
+end
